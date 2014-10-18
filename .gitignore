@@ -5,6 +5,8 @@
 
 java.policy.applet
 
+etc/
+
 # Package Files #
 *.war
 *.ear
