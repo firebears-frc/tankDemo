@@ -33,9 +33,7 @@ public class TankDemo extends PApplet {
 				tank.turn(-30);
 			} else if (key == 'd') {
 				tank.turn(30);
-			} else if (key == '1') {
-				state = 1;
-			}
+			} 
 		} else if (state == 1) {
 			// Do something different in state 1
 		} else {
