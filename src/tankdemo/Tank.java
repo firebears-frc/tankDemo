@@ -7,8 +7,11 @@ import processing.core.PApplet;
  */
 public class Tank implements ArenaObject {
 
-	/** Location measured in pixels of the center of the tank. */
-	private float x = 100, y = 100;
+	/** Applet window on which this object is drawn. */
+	private final TankDemo canvas;
+	
+	/** Location measured in pixels of the center of this object s. */
+	private float x = 100, y = 100, w = 30;
 
 	/** Angle in degrees. */
 	private float angle = 0;
@@ -25,11 +28,8 @@ public class Tank implements ArenaObject {
 	/** Maximum rotational speed in degrees per second. */
 	static final float MAXIMUM_TURN_SPEED = 45;
 
-	/** Applet window on which the tank is drawn. */
-	private final PApplet canvas;
-
 	/** Construct a new Tank. */
-	public Tank(PApplet c) {
+	public Tank(TankDemo c) {
 		canvas = c;
 	}
 
@@ -39,12 +39,12 @@ public class Tank implements ArenaObject {
 	 * @param dt time since the last run, measured in seconds.
 	 */
 	public boolean run(float dt) {
-		// Move the tank
+		// Move this object
 		angle = angle + (dt * turnSpeed);
 		x = x + (dt * forwardSpeed * PApplet.cos(PApplet.radians(angle)));
 		y = y + (dt * forwardSpeed * PApplet.sin(PApplet.radians(angle)));
 
-		// Draw the tank.
+		// Draw this object
 		canvas.pushMatrix();
 		canvas.translate(x, y);
 		canvas.rotate(PApplet.radians(angle));
@@ -101,7 +101,7 @@ public class Tank implements ArenaObject {
 	 *         the screen to this object's leftmost edge.
 	 */
 	public float getX() {
-		return x-15;
+		return x-w/2;
 	}
 
 	/**
@@ -109,21 +109,21 @@ public class Tank implements ArenaObject {
 	 *         screen to this object's top edge.
 	 */
 	public float getY() {
-		return y-15;
+		return y-w/2;
 	}
 
 	/**
 	 * @return width of this object in pixels.
 	 */
 	public float getWidth() {
-		return 30;
+		return w;
 	}
 
 	/**
 	 * @return height of this object in pixels.
 	 */
 	public float getHeight() {
-		return 30;
+		return w;
 	}
 	
 	/** @return whether this {@link Tank} intersects with the other. */
@@ -146,4 +146,5 @@ public class Tank implements ArenaObject {
 		}
 		return true;
 	}
+	
 }
