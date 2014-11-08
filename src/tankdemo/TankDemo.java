@@ -4,24 +4,24 @@ import processing.core.PApplet;
 
 /**
  * Sample Processing Applet that just drives the tank around with the WASD keys.
+ * This class represents the arena in which the game is played.  Also, it
+ * represents the window that pops up.  It can interface with the keyboard and
+ * the mouse.
  */
 public class TankDemo extends PApplet {
 
 	Tank tank;
-	float timePrevious;
 	int state = 0;
 	
 	public void setup() {
 		size(640,480);
 		tank = new Tank(this);
-		timePrevious = millis();
 	}
 
 	public void draw() {
 		background(128, 128, 128);
-		long timeNow = millis();
-		tank.run((timeNow - timePrevious) / 1000.0f);
-		timePrevious = timeNow;
+        float timeDiff = 1.0f / frameRate;
+        tank.run(timeDiff);
 
 		if (keyPressed) {
 			state = 0;

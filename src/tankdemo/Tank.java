@@ -5,15 +5,12 @@ import processing.core.PApplet;
 /**
  * Represents a tank robot.
  */
-public class Tank implements ArenaObject {
+public class Tank extends ArenaObject {
 
 	/** Applet window on which this object is drawn. */
 	private final TankDemo canvas;
-	
-	/** Location measured in pixels of the center of this object s. */
-	private float x = 100, y = 100, w = 30;
 
-	/** Angle in degrees. */
+    /** Angle that the tank is pointing at, measured in degrees. */
 	private float angle = 0;
 
 	/** Speed in pixels per second. */
@@ -31,6 +28,8 @@ public class Tank implements ArenaObject {
 	/** Construct a new Tank. */
 	public Tank(TankDemo c) {
 		canvas = c;
+		width = 30;
+		height = 30;
 	}
 
 	/**
@@ -45,16 +44,16 @@ public class Tank implements ArenaObject {
 		y = y + (dt * forwardSpeed * PApplet.sin(PApplet.radians(angle)));
 
 		// Draw this object
-		canvas.pushMatrix();
-		canvas.translate(x, y);
-		canvas.rotate(PApplet.radians(angle));
-		canvas.translate(-x, -y);
-		canvas.fill(255, 255, 255);
-		canvas.rect(x - 15, y - 15, 30, 8);
-		canvas.rect(x - 15, y + 8, 30, 8);
-		canvas.rect(x - 10, y - 10, 20, 20);
-		canvas.rect(x - 3, y - 3, 25, 6);
-		canvas.popMatrix();
+        canvas.pushMatrix();
+        canvas.translate((x + width/2), (y + height/2));
+        canvas.rotate(PApplet.radians(angle));
+        canvas.translate(-(x + width/2), -(y + height/2));
+        canvas.fill(255, 255, 255);
+        canvas.rect(x, y, 30, 8);
+        canvas.rect(x, y + 23, 30, 8);
+        canvas.rect(x + 5, y +5, 20, 20);
+        canvas.rect(x + 12, y +12, 25, 6);
+        canvas.popMatrix();
 		
 		return true;
 	}
@@ -94,57 +93,6 @@ public class Tank implements ArenaObject {
 	 */
 	public float getAngle() {
 		return angle;
-	}
-
-	/**
-	 * @return the current horizontal position in pixels from the left edge of
-	 *         the screen to this object's leftmost edge.
-	 */
-	public float getX() {
-		return x-w/2;
-	}
-
-	/**
-	 * @return the current vertical position in pixels from the top edge of the
-	 *         screen to this object's top edge.
-	 */
-	public float getY() {
-		return y-w/2;
-	}
-
-	/**
-	 * @return width of this object in pixels.
-	 */
-	public float getWidth() {
-		return w;
-	}
-
-	/**
-	 * @return height of this object in pixels.
-	 */
-	public float getHeight() {
-		return w;
-	}
-	
-	/** @return whether this {@link Tank} intersects with the other. */
-	public boolean intersects(ArenaObject other) {
-		if (this.getX() + this.getWidth() < other.getX()) {
-			// This tank is too far to the left of the other object
-			return false;
-		}
-		if (this.getX() > other.getX() + other.getWidth()) {
-			// This tank is too far to the right of the other object
-			return false;
-		}
-		if (this.getY() + this.getHeight() < other.getY()) {
-			// This tank is too far above the other object
-			return false;
-		}
-		if (this.getY() > other.getY() + other.getHeight()) {
-			// This tank is too far below the other object
-			return false;
-		}
-		return true;
 	}
 	
 }
